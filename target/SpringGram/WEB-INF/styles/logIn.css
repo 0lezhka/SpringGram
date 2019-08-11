@@ -1,0 +1,156 @@
+input {outline:none;}
+
+.signInText{
+    font-size: 15pt;
+    font-family: 'Slabo 27px', serif;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.signOnBlock{
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 0 auto;
+}
+
+.signOnBlock{
+    width: 50%;
+    min-width: 400px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+}
+
+.signOnForm{
+    width: 45%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.signOnFormAdditionalBlock{
+    width: 100%;
+    font-size: 12pt;
+    font-family: Arial;
+    color: gray;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.continueWithBlock{
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.signOnSplitter{
+    width: 0.2%;
+    background: gray;
+    height: 100%;
+}
+
+.inputField{
+    font-size: 15pt;
+    width: 100%;
+    height: 30px;
+    border: 0;
+    border-bottom: 1.2px solid #DCDCDC;
+    transition: 1s;
+}
+
+.inputField:hover{
+    border-bottom: 1.2px solid black;
+}
+
+.inputField:focus{
+    transition: 0.5s;
+    border-bottom: 1.2px solid #4169E1;
+}
+
+.submitButton{
+    transition: 0.5s;
+    font-size: 15pt;
+    color: #DCDCDC;
+    height: 30px;
+    border: 1.2px solid #DCDCDC;
+    background: none;
+}
+
+.submitButton:hover{
+    transition: 0.5s;
+    font-size: 15pt;
+    color: #4169E1;
+    height: 30px;
+    border: 1.2px solid #4169E1;
+    background: none;
+    cursor: pointer;
+}
+
+.continueWithBlock{
+    font-family: 'Slabo 27px', serif;
+}
+
+.continueWithButtonWrapper{
+    margin: 0 auto;
+    width: 90%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.continueWithFacebookBlock{
+    height: 35%;
+    background: #3c5998;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    cursor: pointer;
+}
+
+.continueWithGoogleBlock{
+    height: 35%;
+    background: #4169E1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    cursor: pointer;
+}
+
+.iconWrapper{
+    width: 18%;
+    height: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+}
+
+.continueWithIcon{
+    width: 30px;
+    height: 30px;
+}
+
+.textWrapper{
+    width: 80%;
+    text-align: center;
+    color: white;
+    font-size: 15pt;
+}
+
+.errorText{
+    width: 100%;
+    text-align: center;
+    color: darkred;
+    font-size: 13pt;
+    font-family: 'Slabo 27px', serif;
+}

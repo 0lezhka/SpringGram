@@ -4,22 +4,26 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Component
 @Entity(name = "userProfile")
 public class UserProfile {
     @Id
-    private String nickName;
+    private String nickname;
     private String email;
     private String phone;
+    private String password;
 
     public UserProfile() {
     }
 
-    public UserProfile(String email, String nickName, String phone) {
+    public UserProfile(String email, String password, String nickname, String phone) {
         this.email = email;
-        this.nickName = nickName;
+        this.nickname = nickname;
         this.phone = phone;
+        this.password = password;
     }
 
     public String getEmail() {
@@ -30,12 +34,12 @@ public class UserProfile {
         this.email = email;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getPhone() {
@@ -44,6 +48,14 @@ public class UserProfile {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
 
