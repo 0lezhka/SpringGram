@@ -2,6 +2,7 @@ package com.kopylchak.controllers;
 
 import com.kopylchak.beans.UserProfile;
 import com.kopylchak.dao.UserProfileDAO;
+import com.kopylchak.exceptions.SignUpDataIsBusyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +20,13 @@ public class UserProfileController {
     private UserProfileDAO dao;
 
     @Autowired
-    public UserProfileController(UserProfileDAO dao){
+    public UserProfileController(UserProfileDAO dao) {
         this.dao = dao;
     }
 
 
     @RequestMapping(value = "/logIn", method = RequestMethod.GET)
-    public String showLogInForm(Model model){
+    public String showLogInForm(Model model) {
         model.addAttribute("userProfile", new UserProfile());
         model.addAttribute("rememberMe");
 
@@ -33,8 +34,8 @@ public class UserProfileController {
     }
 
     @RequestMapping(value = "/logIn", method = RequestMethod.POST)
-    public String logIn(UserProfile userProfile, @RequestParam(value = "rememberMe", required = false) boolean rememberMe, Model model){
-        if(dao.userExists(userProfile)){
+    public String logIn(UserProfile userProfile, @RequestParam(value = "rememberMe", required = false) boolean rememberMe, Model model) {
+        if (dao.userExists(userProfile)) {
             return "success";
         }
         model.addAttribute("isLoginDataInvalid", true);
@@ -43,35 +44,21 @@ public class UserProfileController {
 
 
     @RequestMapping(value = "/signUp", method = RequestMethod.GET)
-    public String showSignUpForm(Model model){
+    public String showSignUpForm(Model model) {
         model.addAttribute("userProfile", new UserProfile());
 
         return "signUp";
     }
 
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
-    public String signUp(UserProfile userProfile, Model model){
-        boolean canSignUp = true;
-
-        if(dao.isEmailBusy(userProfile.getEmail())){
-            model.addAttribute("isEmailBusy", true);
-            canSignUp = false;
-        }
-        if(dao.isNicknameBusy(userProfile.getNickname())){
-            model.addAttribute("isNicknameBusy", true);
-            canSignUp = false;
-        }
-        if (dao.isPasswordBusy(userProfile.getPassword())){
-            model.addAttribute("isPasswordBusy", true);
-            canSignUp = false;
-        }
-
-        if(canSignUp){
+    public String signUp(UserProfile userProfile, Model model) {
+        try {
             dao.addUser(userProfile);
-
-            return "homePage";
-        }else {
+        } catch (SignUpDataIsBusyException e) {
+            model.addAttribute("signUpDataIsBusyException", e);
             return "signUp";
         }
+
+        return "homePage";
     }
 }

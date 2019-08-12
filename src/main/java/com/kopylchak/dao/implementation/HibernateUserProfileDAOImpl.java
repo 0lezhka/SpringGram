@@ -2,26 +2,21 @@ package com.kopylchak.dao.implementation;
 
 import com.kopylchak.beans.UserProfile;
 import com.kopylchak.dao.UserProfileDAO;
-import com.kopylchak.exceptions.InvalidSignInDataException;
-import com.kopylchak.exceptions.UserAlreadyExistsException;
+import com.kopylchak.exceptions.SignUpDataIsBusyException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.springframework.stereotype.Component;
 
 @Component("hibernateUserProfileDAOImpl")
-public class HibernateUserProfileDAOImpl implements UserProfileDAO {
-    private SessionFactory factory;
-
-    public HibernateUserProfileDAOImpl(){
-        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-        factory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-    }
-
+public class HibernateUserProfileDAOImpl extends HibernateDAOImpl implements UserProfileDAO {
     @Override
-    public void addUser(UserProfile userProfile) {
+    public void addUser(UserProfile userProfile) throws SignUpDataIsBusyException{
+        SignUpDataIsBusyException e = new SignUpDataIsBusyException(isEmailBusy(userProfile.getEmail()),
+                isPasswordBusy(userProfile.getPassword()), isNicknameBusy(userProfile.getNickname()));
+
+        if(e.isDataBusy()){
+            throw e;
+        }
+
         try(Session session = factory.openSession()){
             session.beginTransaction();
             session.persist(userProfile);
@@ -50,7 +45,7 @@ public class HibernateUserProfileDAOImpl implements UserProfileDAO {
         }
     }
 
-    public boolean isEmailBusy(String email){
+    private boolean isEmailBusy(String email){
         try(Session session = factory.openSession()){
             session.beginTransaction();
             return session.createQuery("from userProfile where email=:email").setParameter("email", email)
@@ -58,7 +53,7 @@ public class HibernateUserProfileDAOImpl implements UserProfileDAO {
         }
     }
 
-    public boolean isPasswordBusy(String password){
+    private boolean isPasswordBusy(String password){
         try(Session session = factory.openSession()){
             session.beginTransaction();
             return session.createQuery("from userProfile where password=:password").setParameter("password", password)
@@ -66,7 +61,7 @@ public class HibernateUserProfileDAOImpl implements UserProfileDAO {
         }
     }
 
-    public boolean isNicknameBusy(String nickname){
+    private boolean isNicknameBusy(String nickname){
         try(Session session = factory.openSession()){
             session.beginTransaction();
             return session.createQuery("from userProfile where nickname=:nickname")

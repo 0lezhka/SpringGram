@@ -2,10 +2,13 @@ package com.kopylchak.beans;
 
 import org.springframework.stereotype.Component;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Component
 @Entity(name = "userProfile")
@@ -15,6 +18,8 @@ public class UserProfile {
     private String email;
     private String phone;
     private String password;
+    @OneToMany
+    private List<Chat> chats;
 
     public UserProfile() {
     }

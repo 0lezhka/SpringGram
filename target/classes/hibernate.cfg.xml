@@ -13,5 +13,7 @@
         <property name="show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
         <mapping class="com.kopylchak.beans.UserProfile"/>
+        <mapping class="com.kopylchak.beans.Message"/>
+        <mapping class="com.kopylchak.beans.Chat"/>
     </session-factory>
 </hibernate-configuration>
